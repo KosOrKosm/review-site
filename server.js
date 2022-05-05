@@ -21,8 +21,10 @@ function hostFolder(folder) {
 // Log API calls
 app.use(function(req, res, next) {
 
-    if (req.path.startsWith('/api/'))
+    if (req.path.startsWith('/api/')) {
         console.log('\nRecieved API request: ' + req.method + ' ' + req.path)
+        console.log('\tSESSION: ' + req.cookies.session)
+    }
 
     next()
 
@@ -258,8 +260,6 @@ app.use(function(req, res, next) {
     if (!req.cookies.session || !findSession(req.cookies.session)) {
         return res.redirect('/login')
     }
-
-    console.log('\tSESSION: ' + req.cookies.session)
 
     // Refresh the session
     res.cookie('session', req.cookies.session, { maxAge: sessionDuration })
@@ -550,7 +550,13 @@ app.post('/api/movie', function(req, res) {
 // Get movies
 app.get('/api/movie', function(req, res) {
 
-    const filter = req.query.name ? { name: req.query.name } : null
+    const filter = { }
+
+    if (req.query.id)
+        filter._id = new mongo.ObjectId(req.query.id)
+
+    if (req.query.name)
+        filter.name = req.query.name
 
     MongoClient.connect(dbURL)
     .then(conn => {
@@ -558,7 +564,10 @@ app.get('/api/movie', function(req, res) {
         const movies = db.collection('movies')
         movies.find(filter).toArray()
         .then(records => {
-            res.status(200).json(records)
+            if(records.length > 1)
+                res.status(200).json(records)
+            else
+                res.status(200).json(records[0])
         })
         .catch(err => {
             console.log('Couldn\'t connect to server: ' + err)
@@ -642,6 +651,7 @@ app.get('/api/movie/reviews', function(req, res) {
 // Front-end URLs
 hostFolder('/style')
 hostFolder('/content')
+hostFolder('/templates')
 hostFile('index.js')
 app.get('/', function(req, res) { res.sendFile(__dirname + '/index.html') })
 

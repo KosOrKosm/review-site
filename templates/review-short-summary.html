@@ -1,28 +1,26 @@
-<link rel="stylesheet" href="style/container.css">
 <link rel="stylesheet" href="style/review-short-summary.css">
+{{#each reviews}}
 <div class="vert-group review-short-summary">
     <div class="group review-user-details">
         <img class="review-profile" src="https://assets.bonappetit.com/photos/5c62e4a3e81bbf522a9579ce/1:1/w_2240,c_limit/milk-bread.jpg">
         <label>Score</label>
         <div class="review-score-holder">
-            <input class="review-score" id="score" type="text" readonly="true" value="10"> 
+            <input class="review-score" id="score" type="text" readonly="true" value="{{score}}"> 
             / 10
         </div>
     </div>
     <div class="fill-space review-short-summary-container">
         <div class="review-movie-name">
-            Movie Name
+            {{movieName}}
         </div>
         <div class="line"></div>
         <div class="review-text">
-            Review Short Text<br>
-            .................<br>
-            .................<br>
-            .................
+            {{text}}
         </div>
         <div class="vert-group review-summary-btns">
-            <button class="btn btn-view-full">View Full Review</button>
-            <button class="btn btn-view-movie">View Movie</button>
+            <button class="btn btn-view-full" href="{{_id}}">View Full Review</button>
+            <button class="btn btn-view-movie" href="{{movie}}">View Movie</button>
         </div>
     </div>
 </div>
+{{/each}}
