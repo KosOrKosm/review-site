@@ -1,0 +1,42 @@
+.movie-img-region {
+    width: 200px;
+    border: 5px solid black;
+    display: flex;
+}
+
+.movie-img-region .movie-img {
+    flex: 0 1 75px;
+    min-width: 100%;
+    height: auto;
+}
+
+.movie .content-prefer-bot {
+    flex: 0 1 fit-content;
+    margin-top: 5px;
+}
+
+.movie .movie-details {
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid black;
+}
+
+.movie .movie-name {
+    display: flex;
+    padding: 10px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: xx-large;
+    align-items: center;
+    justify-content: center;
+}
+
+.movie-desc {
+    padding: 5px;
+    flex-basis: 75px;
+}
+
+.movie-btns * {
+    width: 100%;
+}

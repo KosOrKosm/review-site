@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="style/movie.css">
+{{#each movies}}
+<div class="vert-group movie">
+    <div class="movie-img-region">
+        <img class="movie-img" src="https://www.companyfolders.com/blog/media/2017/07/jaws.jpg">
+    </div>
+    <div class="fill-space movie-details">
+        <div class="fill-space group">
+            <div class="movie-name">
+                {{name}}
+            </div>
+            <div class="line"></div>
+            <div class="movie-desc">
+                {{desc}}
+            </div>
+        </div>
+        <div class="shrinkable group movie-btns">
+            <button class="btn btn-view-reviews" href="{{_id}}">View All Movie Reviews</button>
+        </div>
+    </div>
+</div>
+{{/each}}
