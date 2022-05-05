@@ -31,9 +31,7 @@
 }
 
 .review-score {
-    flex: 0 1 35px;
-    min-width: 25px;
-    max-width: 35px;
+    width: 2ch;
     text-align: center;
 }
 
