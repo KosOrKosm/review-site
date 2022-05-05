@@ -564,10 +564,9 @@ app.get('/api/movie', function(req, res) {
         const movies = db.collection('movies')
         movies.find(filter).toArray()
         .then(records => {
-            if(records.length > 1)
-                res.status(200).json(records)
-            else
-                res.status(200).json(records[0])
+            res.status(200).json({
+                movies: records
+            })
         })
         .catch(err => {
             console.log('Couldn\'t connect to server: ' + err)
