@@ -2,7 +2,7 @@
 async function loadReviewList() {
 
     // Load the template and reviews
-    const templateSource = await doRequest('GET', 'templates/review-short-summary.html')
+    const templateSource = await doRequest('GET', 'templates/review-short-summary.handlebars')
     const data = JSON.parse(await doRequest('GET', '/api/review'))
 
     // Load movie names into reviews
