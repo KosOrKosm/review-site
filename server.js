@@ -654,7 +654,83 @@ hostFolder('/templates')
 hostFile('index.js')
 app.get('/', function(req, res) { res.sendFile(__dirname + '/index.html') })
 
+function sample(items) {
+    return items[Math.floor(Math.random()*items.length)]
+}
+
+async function loadTestData() {
+
+    const conn = await MongoClient.connect(dbURL)
+    const db = conn.db('jnf-review')
+    const movies = db.collection('movies')
+    const reviews = db.collection('reviews')
+    const accounts = db.collection('accounts')
+
+    console.log('Dropping old tables')
+
+    // Drop old tables
+    await movies.drop().catch(err => {})
+    await reviews.drop().catch(err => {})
+    await accounts.drop().catch(err => {})
+
+    console.log('Creating test accounts')
+
+    adminAccount = (await accounts.insertOne({
+        username: "admin",
+        password: "admin"
+    })).insertedId
+
+    reviewerAccount = (await accounts.insertOne({
+        username: "reviewer",
+        password: "reviewer"
+    })).insertedId
+
+    console.log('Creating test movies')
+
+    test_movies = (await movies.insertMany([{
+        _id: 1,
+        name: "Test Movie 1"
+    },{
+        _id: 2,
+        name: "Test Movie 2"
+    },{
+        _id: 3,
+        name: "Test Movie 3"
+    }])).insertedIds
+
+    console.log('Creating test reviews')
+
+    test_reviews = await reviews.insertMany([{
+        owner: reviewerAccount,
+        movie: sample([1, 2, 3]),
+        score: Math.round(Math.random()*10),
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+    },{
+        owner: reviewerAccount,
+        movie: sample([1, 2, 3]),
+        score: Math.round(Math.random()*10),
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+    },{
+        owner: reviewerAccount,
+        movie: sample([1, 2, 3]),
+        score: Math.round(Math.random()*10),
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+    },{
+        owner: reviewerAccount,
+        movie: sample([1, 2, 3]),
+        score: Math.round(Math.random()*10),
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+    }])
+
+    conn.close()
+
+}
+
 app.listen(app.get('port'), function() {
     console.log('Express server active on port %d', app.get('port'))
     console.log('Visit http://localhost:%d', app.get('port'))
+
+    // Load some dummy movies and reviews for testing purposes
+    loadTestData()
+
 })
