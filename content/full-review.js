@@ -80,6 +80,15 @@ function updateFullReviewUI(reviewID) {
             ev.preventDefault()
 
             // restore old values
+            doRequest('GET', `/api/review?id=${document.getElementById('btn-edit-review').getAttribute('href')}`)
+            .then(data => {
+                const review = JSON.parse(data).reviews[0]
+                document.getElementById('score').value = review.score
+                document.getElementById('review-text').value = review.text
+            })
+            .catch(err => {
+
+            })
 
             editing = false
             updateFullReviewUI(document.getElementById('btn-edit-review').getAttribute('href'))
