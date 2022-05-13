@@ -611,7 +611,6 @@ app.get('/api/movie/reviews', function(req, res) {
                 res.status(400).send('No such movie found')
             } else {
 
-                console.log('finding movies')
                 const movie = movies[0]
                 const reviews = db.collection('reviews')
                 reviews.find({
@@ -627,7 +626,6 @@ app.get('/api/movie/reviews', function(req, res) {
                     res.status(500).send('Internal server error')
                 })
                 .finally(() => {
-                    console.log('complete')
                     conn.close()
                 })
 
