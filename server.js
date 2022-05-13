@@ -787,11 +787,14 @@ async function loadTestData() {
     console.log('Creating test movies')
 
     test_movies = [{
-        name: "Test Movie 1"
+        name: "Test Movie 1",
+        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
     },{
-        name: "Test Movie 2"
+        name: "Test Movie 2",
+        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
     },{
-        name: "Test Movie 3"
+        name: "Test Movie 3",
+        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
     }]
     
     await movies.insertMany(test_movies)
