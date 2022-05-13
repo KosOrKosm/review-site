@@ -468,9 +468,15 @@ app.delete('/api/review', function(req, res) {
 })
 
 /**
- * Gets all reviews associated to the current user's account.
+ * Gets reviews associated to the current user's account,
+ * or gets any review given its ID.
  * 
  * USAGE: GET /api/review
+ *              OR
+ *        GET /api/review?id=**someID**
+ * 
+ * PARAMS:
+ *      id: ID of review to return (optional)
  * 
  */
 app.get('/api/review', function(req, res) {
@@ -482,13 +488,19 @@ app.get('/api/review', function(req, res) {
         return
     }
 
+    const filter = { }
+
+    if (req.query.id)
+        filter._id = new mongo.ObjectId(req.query.id)
+    else {
+        filter.owner =  sessionRecord.userid
+    }
+
     MongoClient.connect(dbURL)
     .then(conn => {
         const db = conn.db('jnf-review')
         const reviews = db.collection('reviews')
-        reviews.find({
-            owner: sessionRecord.userid,
-        }).toArray()
+        reviews.find(filter).toArray()
         .then(records => {
             res.status(200).json({
                 reviews: records
