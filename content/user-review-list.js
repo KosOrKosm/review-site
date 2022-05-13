@@ -24,9 +24,12 @@ async function loadReviewList() {
 
                 // The reviewID is stored in the button's href attribute
                 const reviewID = ev.target.getAttribute('href')
-                console.log(reviewID)
+                window.reviewIDtoLoad = reviewID
 
-                // TODO: load content
+                // Load the appropriate HTML+scripts for the full review UI
+                loadContent(undefined, [
+                    'content/full-review.js'
+                ])
 
             })
 
@@ -35,9 +38,13 @@ async function loadReviewList() {
 
                 // The movieID is stored in the button's href attribute
                 const movieID = ev.target.getAttribute('href')
-                console.log(movieID)
+                window.movieIDToShow = movieID
 
-                // TODO: load content
+                // Load the appropriate HTML+scripts for the movie-review-list
+                loadContent('content/content-list.html', [
+                    'content/content-list.js', 
+                    'content/movie-review-list.js'
+                ])
 
             })
 
