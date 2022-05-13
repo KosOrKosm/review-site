@@ -1,8 +1,8 @@
 
-let editing = false
-let currentEditCallback = ev => ev.preventDefault()
-let currentSubmitCallback = ev => ev.preventDefault()
-let currentCancelCallback = ev => ev.preventDefault()
+editing = false
+currentEditCallback = ev => ev.preventDefault()
+currentSubmitCallback = ev => ev.preventDefault()
+currentCancelCallback = ev => ev.preventDefault()
 
 async function loadFullReview(reviewID) {
 
@@ -78,6 +78,8 @@ function updateFullReviewUI(reviewID) {
 
         currentCancelCallback = (ev) => {
             ev.preventDefault()
+
+            // restore old values
 
             editing = false
             updateFullReviewUI(document.getElementById('btn-edit-review').getAttribute('href'))
