@@ -7,6 +7,9 @@ function setContentListContent(html) {
     document.getElementById('content-list').innerHTML = html
 }
 
+function setContentListLeftContent(html) {
+    document.getElementById('content-list-left').innerHTML = html
+}
 
 async function buildList(templatePath, data, forEachGenerated) {
 
