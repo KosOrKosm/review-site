@@ -1,0 +1,7 @@
+.btn {
+    flex: 1 1 auto;
+    flex-basis: 8vh;
+    min-height: fit-content;
+    max-height: 8vh;
+    margin: 10px;
+}
