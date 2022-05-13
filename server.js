@@ -687,37 +687,36 @@ async function loadTestData() {
 
     console.log('Creating test movies')
 
-    test_movies = (await movies.insertMany([{
-        _id: 1,
+    test_movies = [{
         name: "Test Movie 1"
     },{
-        _id: 2,
         name: "Test Movie 2"
     },{
-        _id: 3,
         name: "Test Movie 3"
-    }])).insertedIds
+    }]
+    
+    await movies.insertMany(test_movies)
 
     console.log('Creating test reviews')
 
     test_reviews = await reviews.insertMany([{
         owner: reviewerAccount,
-        movie: sample([1, 2, 3]),
+        movie: sample(test_movies)._id,
         score: Math.round(Math.random()*10),
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
     },{
         owner: reviewerAccount,
-        movie: sample([1, 2, 3]),
+        movie: sample(test_movies)._id,
         score: Math.round(Math.random()*10),
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
     },{
         owner: reviewerAccount,
-        movie: sample([1, 2, 3]),
+        movie: sample(test_movies)._id,
         score: Math.round(Math.random()*10),
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
     },{
         owner: reviewerAccount,
-        movie: sample([1, 2, 3]),
+        movie: sample(test_movies)._id,
         score: Math.round(Math.random()*10),
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
     }])
