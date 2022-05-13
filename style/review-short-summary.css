@@ -1,4 +1,10 @@
 
+.content-block {
+    width: 80%;
+    max-width: 650px;
+    min-width: fit-content;
+}
+
 .review-short-summary {
     
 }
@@ -46,7 +52,10 @@
 
 .review-text {
     padding: 5px;
-    flex-basis: 75px;
+    flex-basis: fit-content;
+    max-height: 15ch;
+    min-height: 2ch;
+    overflow-y: auto;
 }
 
 .review-summary-btns * {
