@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="style/review.css">
+<div class="group review-details">
+    <div class="group fill-space">
+        <label>Score</label>
+        <div class="review-score-holder">
+            <input class="review-score" id="score" type="text" readonly="true" value="{{score}}"> 
+            / 10
+        </div>
+    </div>
+    <div class="vert-group shrinkable">
+        <button class="btn btn-edit-review" href="{{_id}}">EDIT</button>
+    </div>
+</div>
+<div class="fill-space group review-container">
+    <div class="group fill-space">
+        <div class="review-movie-name">
+            {{movieName}}
+        </div>
+        <div class="line"></div>
+        <textarea class="fill-space review-text" id="review-text" readonly="true">{{text}}</textarea>
+    </div>
+    <div class="vert-group shrinkable review-btns">
+        <button class="btn btn-view-full" href="{{movie}}">View All Reviews for this Movie</button>
+        <button class="btn btn-view-movie" onclick="window.location.reload()">Return to Home</button>
+    </div>
+</div>

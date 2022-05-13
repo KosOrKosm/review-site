@@ -1,0 +1,44 @@
+.content-block {
+    width: 80%;
+    max-width: 650px;
+    min-width: fit-content;
+    flex-direction: row;
+}
+
+.review-score-holder {
+    display:flex;
+    gap: 5px
+}
+
+.review-score-holder * {
+    flex: 0 0 auto;
+}
+
+.review-score {
+    width: 2ch;
+    text-align: center;
+}
+
+.review-text {
+    resize: vertical;
+    overflow-y: auto;
+    flex-basis: auto;
+    min-height: fit-content;
+    max-height: 70vh;
+}
+
+.review-details {
+    border-right: 2px black solid;
+    display: flex;
+    align-items: center;
+}
+
+.btn-edit-review {
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    margin: 10px;
+}
+
+.review-btns * {
+    width: 50%;
+}

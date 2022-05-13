@@ -36,9 +36,12 @@ async function loadMovieReviewList(movieID) {
 
                 // The reviewID is stored in the button's href attribute
                 const reviewID = ev.target.getAttribute('href')
-                console.log(reviewID)
+                window.reviewIDtoLoad = reviewID
 
-                // TODO: load content
+                // Load the appropriate HTML+scripts for the full review UI
+                loadContent(undefined, [
+                    'content/full-review.js'
+                ])
 
             })
 

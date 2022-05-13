@@ -31,8 +31,10 @@ const content = body.getElementsByClassName('content-block')[0]
 async function loadContent(htmlname, jsnames) {
 
     // Load the HTML
-    let html = await doRequest('GET', htmlname)
-    content.innerHTML = html
+    if (htmlname != undefined) {
+        let html = await doRequest('GET', htmlname)
+        content.innerHTML = html
+    }
 
     // Delete all scripts currently declared
     let scripts = document.head.getElementsByTagName('script')
