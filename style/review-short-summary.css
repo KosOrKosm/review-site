@@ -61,3 +61,12 @@
 .review-summary-btns * {
     width: 50%;
 }
+
+.movie {
+    max-width: 210px;
+}
+
+.movie-desc {
+    flex-basis: 20ch;
+    max-height: 20ch;
+}

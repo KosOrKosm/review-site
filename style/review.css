@@ -23,7 +23,8 @@
     resize: vertical;
     overflow-y: auto;
     flex-basis: auto;
-    min-height: fit-content;
+    height: 30vh;
+    min-height: 5ch;
     max-height: 70vh;
 }
 
