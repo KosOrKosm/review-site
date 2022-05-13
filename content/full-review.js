@@ -10,8 +10,6 @@ async function loadFullReview(reviewID) {
     const data = JSON.parse(await doRequest('GET', `/api/review?id=${reviewID}`))
     const review = data.reviews[0]
 
-    console.log(data)
-
     // Get movie
     const movies = JSON.parse(await doRequest('GET', `/api/movie?id=${review.movie}`))
     const movie = movies.movies[0]
@@ -47,8 +45,6 @@ function updateFullReviewUI(reviewID) {
 
     // Update buttons to reflect current mode
     if (editing) {
-
-        console.log('switching to editing mode!')
 
         // Disable readonly
         score.readOnly = false
@@ -113,8 +109,6 @@ function updateFullReviewUI(reviewID) {
         editBtn.innerHTML = 'EDIT'
         submitBtn.innerHTML = 'View All Reviews for this Movie'
         cancelBtn.innerHTML = 'Return to Home'
-
-        console.log('switching to viewing mode!')
 
         // Begin editing callback
         currentEditCallback = (ev) => {
