@@ -11,7 +11,8 @@ function doRequest(method, URL, body) {
             } else {
                 reject({
                     status: this.status,
-                    statusText: xhr.statusText
+                    statusText: xhr.statusText,
+                    response: xhr.response
                 })
             }
         }

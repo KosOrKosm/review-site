@@ -1,36 +1,67 @@
 
-editing = false
 currentEditCallback = ev => ev.preventDefault()
 currentSubmitCallback = ev => ev.preventDefault()
 currentCancelCallback = ev => ev.preventDefault()
 
 async function loadFullReview(reviewID) {
 
-    // Get review
-    const data = JSON.parse(await doRequest('GET', `/api/review?id=${reviewID}`))
-    const review = data.reviews[0]
+    let review = undefined
+    let createNew = false
 
-    // Get movie
-    const movies = JSON.parse(await doRequest('GET', `/api/movie?id=${review.movie}`))
-    const movie = movies.movies[0]
+    // Load the given review
+    if (reviewID) {
 
-    review.movieName = movie.name
+        // Get review
+        const data = JSON.parse(await doRequest('GET', `/api/review?id=${reviewID}`))
+        review = data.reviews[0]
+    
+        // Get movie
+        const movies = JSON.parse(await doRequest('GET', `/api/movie?id=${review.movie}`))
+        const movie = movies.movies[0]
+    
+        review.movieName = movie.name
+
+    } else {
+
+        // Get movie
+        const movies = JSON.parse(await doRequest('GET', `/api/movie?id=${window.movieIDtoLoad}`))
+        const movie = movies.movies[0]
+
+        // Construct blank review
+        review = { 
+            _id: 0,
+            score: 10,
+            text: '',
+            movie: movie._id,
+            movieName: movie.name
+        }
+
+        createNew = true
+
+    }
 
     // Load full review template and frame
     const template = Handlebars.compile(await doRequest('GET', 'templates/full-review.handlebars'))
     content.innerHTML = template(review)
 
+    let editing = false
+
     // Hide edit button if this account doesn't own this review
-    const owns = JSON.parse(await doRequest('GET', `/api/review/isOwner?id=${reviewID}`)).isOwner == 'true'
-    if(!owns)
+    if (createNew) {
         document.getElementById('btn-edit-review').style.display = 'none'
+        editing = true
+    } else {
+        const owns = JSON.parse(await doRequest('GET', `/api/review/isOwner?id=${reviewID}`)).isOwner == 'true'
+        if (!owns)
+            document.getElementById('btn-edit-review').style.display = 'none'
+    }
 
     // Load the initial, non-editing mode UI
-    updateFullReviewUI(reviewID)
+    updateFullReviewUI(editing, createNew)
 
 }
 
-function updateFullReviewUI(reviewID) {
+function updateFullReviewUI(editing, createNew) {
 
     const editBtn = document.getElementById('btn-edit-review')
     const submitBtn = document.getElementById('btn-view-movie')
@@ -65,34 +96,81 @@ function updateFullReviewUI(reviewID) {
             window.location.reload()
         } 
 
-        currentSubmitCallback = (ev) => {
-            ev.preventDefault()
+        if (createNew) {
 
-            // update review
-            doRequest('PUT', `/api/review?id=${document.getElementById('btn-edit-review').getAttribute('href')}`, 
-                `score=${document.getElementById('score').value}&text=${document.getElementById('review-text').value}`
-            )
+            // Create new review callback
+            currentSubmitCallback = (ev) => {
+                ev.preventDefault()
+    
+                // post review
+                doRequest('POST', '/api/review',
+                    `movie=${ev.target.getAttribute('href')}&` +
+                    `score=${document.getElementById('score').value}&` +
+                    `text=${document.getElementById('review-text').value}`
+                ).then(response => {
 
-            editing = false
-            updateFullReviewUI(document.getElementById('btn-edit-review').getAttribute('href'))
-        }
+                    // Try to parse the response
+                    response = JSON.parse(response)
+                    if (response.acknowledged) {
 
-        currentCancelCallback = (ev) => {
-            ev.preventDefault()
+                        // Success!
+                        // Load the ID of the newly created review and go to edit mode
+                        document.getElementById('btn-edit-review').setAttribute('href', response.insertedId)
+                        document.getElementById('btn-edit-review').style.display = 'flex'
+                        updateFullReviewUI(false, false)
 
-            // restore old values
-            doRequest('GET', `/api/review?id=${document.getElementById('btn-edit-review').getAttribute('href')}`)
-            .then(data => {
-                const review = JSON.parse(data).reviews[0]
-                document.getElementById('score').value = review.score
-                document.getElementById('review-text').value = review.text
-            })
-            .catch(err => {
+                    } else {
+                        // Huh... something went wrong.
+                        alert('Failed to post your review due to an internal server error. Please try again later.')
+                    }
 
-            })
+                })
+                .catch(err => {
+                    // Database is probably down.
+                    alert('Failed to post your review due to an internal server error. Please try again later.')
+                })
 
-            editing = false
-            updateFullReviewUI(document.getElementById('btn-edit-review').getAttribute('href'))
+            }
+
+            // Return to home callback
+            currentCancelCallback = (ev) => {
+                ev.preventDefault()
+    
+                // Reloading the window to return to home
+                window.location.reload()
+            }
+
+        } else {
+
+            // Modify existing review callback
+            currentSubmitCallback = (ev) => {
+                ev.preventDefault()
+    
+                // update review
+                doRequest('PUT', `/api/review?id=${document.getElementById('btn-edit-review').getAttribute('href')}`, 
+                    `score=${document.getElementById('score').value}&text=${document.getElementById('review-text').value}`
+                )
+    
+                updateFullReviewUI(false, false)
+            }
+            
+            currentCancelCallback = (ev) => {
+                ev.preventDefault()
+
+                // restore old values
+                doRequest('GET', `/api/review?id=${document.getElementById('btn-edit-review').getAttribute('href')}`)
+                .then(data => {
+                    const review = JSON.parse(data).reviews[0]
+                    document.getElementById('score').value = review.score
+                    document.getElementById('review-text').value = review.text
+                })
+                .catch(err => {
+
+                })
+
+                updateFullReviewUI(false, false)
+            }
+
         }
 
         editBtn.addEventListener('click', currentEditCallback)
@@ -114,8 +192,7 @@ function updateFullReviewUI(reviewID) {
         currentEditCallback = (ev) => {
             ev.preventDefault()
 
-            editing = true
-            updateFullReviewUI(ev.target.getAttribute('href'))
+            updateFullReviewUI(true, false)
         } 
 
         // View all review movies callback

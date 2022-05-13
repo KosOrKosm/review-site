@@ -28,8 +28,25 @@ async function loadMovieReviewList(movieID) {
         data,
         review => {
 
+            let createReviewBtn = document.getElementsByClassName('btn-review-this')[0]
             let viewReviewBtn = review.getElementsByClassName('btn-view-full')[0]
             let viewMovieBtn = review.getElementsByClassName('btn-view-movie')[0]
+            
+            createReviewBtn.addEventListener('click', function(ev) {
+                
+                ev.preventDefault()
+
+                // The movieID is stored in the button's href attribute
+                const movieID = ev.target.getAttribute('href')
+                window.reviewIDtoLoad = undefined
+                window.movieIDtoLoad = movieID
+
+                // Load the appropriate HTML+scripts for the full review UI
+                loadContent(undefined, [
+                    'content/full-review.js'
+                ])
+
+            })
 
             viewReviewBtn.addEventListener('click', function(ev) {
                 ev.preventDefault()
