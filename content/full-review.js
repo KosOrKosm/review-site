@@ -22,6 +22,11 @@ async function loadFullReview(reviewID) {
     const template = Handlebars.compile(await doRequest('GET', 'templates/full-review.handlebars'))
     content.innerHTML = template(review)
 
+    // Hide edit button if this account doesn't own this review
+    const owns = JSON.parse(await doRequest('GET', `/api/review/isOwner?id=${reviewID}`)).isOwner == 'true'
+    if(!owns)
+        document.getElementById('btn-edit-review').style.display = 'none'
+
     // Load the initial, non-editing mode UI
     updateFullReviewUI(reviewID)
 

@@ -271,6 +271,59 @@ app.use(function(req, res, next) {
 // ======================= API Urls =======================
 
 /**
+ * Checks if the currently logged in user owns a review
+ * 
+ * USAGE: GET /api/review/isOwner?id=**someID**
+ * 
+ * PARAMS:
+ *      id: ID of the review to check
+ */
+app.get('/api/review/isOwner', function(req, res) {
+    
+    const sessionRecord = findSession(req.cookies.session)
+
+    if (!sessionRecord) {
+        res.status(403).send('Please log in.')
+        return
+    }
+    
+    const filter = { 
+        _id: new mongo.ObjectId(req.query.id),
+        owner: sessionRecord.userid
+    }
+
+    MongoClient.connect(dbURL)
+    .then(conn => {
+        const db = conn.db('jnf-review')
+        const reviews = db.collection('reviews')
+        reviews.find(filter).toArray()
+        .then(records => {
+            if(records != undefined && records.length != undefined) {
+                if(records.length > 0)
+                    res.status(200).json({ isOwner: 'true' })
+                else
+                    res.status(200).json({ isOwner: 'false' })
+            } else {
+                res.status(400).send('Internal server error')
+            }
+        })
+        .catch(err => {
+            console.log('Error while retrieving reviews: ' + err)
+            res.status(500).send('Internal server error')
+        })
+        .finally(() => {
+            conn.close()
+        })
+    })
+    .catch(err => {
+        console.log('Couldn\'t connect to server: ' + err)
+        res.status(500).send('Internal server error')
+    })
+
+
+})
+
+/**
  * Create a review for a given movie
  * 
  * USAGE: POST /api/review
