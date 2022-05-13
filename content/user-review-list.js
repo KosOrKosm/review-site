@@ -12,7 +12,7 @@ async function loadReviewList() {
 
     // Generate HTML list from template
     buildList(
-        'templates/review-short-summary.handlebars',
+        'templates/review.handlebars',
         data,
         review => {
 
