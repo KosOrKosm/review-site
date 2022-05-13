@@ -34,6 +34,7 @@ app.use(function(req, res, next) {
 const mongo = require('mongodb')
 const MongoClient = mongo.MongoClient
 const dbURL = 'mongodb://localhost:27017'
+const dbName = 'jnt-review'
 
 // =================== SESSION MANAGEMENT ===================
 
@@ -112,7 +113,7 @@ app.post('/api/createAccount', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const coll = db.collection('accounts')
         coll.findOne({
             username: user
@@ -168,7 +169,7 @@ app.post('/api/login', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const coll = db.collection('accounts')
         coll.findOne({
             username: user,
@@ -294,7 +295,7 @@ app.get('/api/review/isOwner', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const reviews = db.collection('reviews')
         reviews.find(filter).toArray()
         .then(records => {
@@ -353,7 +354,7 @@ app.post('/api/review', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
 
         // Make sure the review is for a valid movie
         const movies = db.collection('movies')
@@ -441,7 +442,7 @@ app.put('/api/review', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const reviews = db.collection('reviews')
 
         reviews.updateOne({
@@ -492,7 +493,7 @@ app.delete('/api/review', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const reviews = db.collection('reviews')
 
         reviews.findOneAndDelete({
@@ -551,7 +552,7 @@ app.get('/api/review', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const reviews = db.collection('reviews')
         reviews.find(filter).toArray()
         .then(records => {
@@ -598,7 +599,7 @@ app.post('/api/movie', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const movies = db.collection('movies')
         movies.insertOne({
             name: req.body.name
@@ -649,7 +650,7 @@ app.get('/api/movie', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const movies = db.collection('movies')
         movies.find(filter).toArray()
         .then(records => {
@@ -697,7 +698,7 @@ app.get('/api/movie/reviews', function(req, res) {
 
     MongoClient.connect(dbURL)
     .then(conn => {
-        const db = conn.db('jnf-review')
+        const db = conn.db(dbName)
         const movies = db.collection('movies')
 
         movies.find(filter).toArray()
@@ -760,7 +761,7 @@ function sample(items) {
 async function loadTestData() {
 
     const conn = await MongoClient.connect(dbURL)
-    const db = conn.db('jnf-review')
+    const db = conn.db(dbName)
     const movies = db.collection('movies')
     const reviews = db.collection('reviews')
     const accounts = db.collection('accounts')
