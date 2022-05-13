@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="style/review-short-summary.css">
+{{#if reviews}}
 {{#each reviews}}
 <div class="vert-group review-short-summary">
     <div class="group review-user-details">
@@ -24,3 +25,8 @@
     </div>
 </div>
 {{/each}}
+{{else}}
+<div style="display:flex;align-items:center;justify-content:center;flex: 1 1 auto;font-weight:bolder;font-size:xx-large">
+    No reviews found!
+</div>
+{{/if}}
