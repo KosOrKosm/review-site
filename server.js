@@ -327,7 +327,7 @@ app.post('/api/review', function(req, res) {
                         conn.close()
                     } else {
 
-                        // Finally actually inser the record
+                        // Finally actually insert the record
                         reviews.insertOne(reviewRecord)
                         .then(record => {
                             res.status(200).json(record)
@@ -521,7 +521,16 @@ app.get('/api/review', function(req, res) {
 
 })
 
-// Create a movie
+/**
+ * Create a review a movie. Only the user named "admin" can do this.
+ * 
+ * USAGE: POST /api/movie
+ *        pass the contents of an HTML form. 
+ *        ie. doRequest('POST', '/api/review', formData)
+ * 
+ * PARAMS:
+ *      name: the name of the movie being created
+ */
 app.post('/api/movie', function(req, res) {
 
     const sessionRecord = findSession(req.cookies.session)
@@ -559,7 +568,18 @@ app.post('/api/movie', function(req, res) {
 
 })
 
-// Get movies
+/**
+ * Get a movie, given its name or ID
+ * 
+ * USAGE: GET /api/movie?id=**someID**
+ *                OR
+ *        GET /api/movie?name=**someName**
+ * 
+ * PARAMS:
+ *      name: name of movie to return
+ *              OR
+ *      id: ID of movie to return
+ */
 app.get('/api/movie', function(req, res) {
 
     const filter = { }
@@ -599,7 +619,19 @@ app.get('/api/movie', function(req, res) {
 
 })
 
-// Get reviews given movie
+/**
+ * Gets reviews associated to a given movie.
+ * 
+ * USAGE: GET /api/movie/reviews?id=**someID**
+ *                OR
+ *        GET /api/movie/reviews?name=**someName**
+ * 
+ * PARAMS:
+ *      name: name of movie to find reviews for
+ *              OR
+ *      id: ID of movie to find reviews for
+ * 
+ */
 app.get('/api/movie/reviews', function(req, res) {
 
     const filter = { }
