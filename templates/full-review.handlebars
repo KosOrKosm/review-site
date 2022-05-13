@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="vert-group shrinkable">
-        <button class="btn btn-edit-review" href="{{_id}}">EDIT</button>
+        <button class="btn btn-edit-review" id="btn-edit-review" href="{{_id}}">EDIT</button>
     </div>
 </div>
 <div class="fill-space group review-container">
@@ -20,7 +20,7 @@
         <textarea class="fill-space review-text" id="review-text" readonly="true">{{text}}</textarea>
     </div>
     <div class="vert-group shrinkable review-btns">
-        <button class="btn btn-view-full" href="{{movie}}">View All Reviews for this Movie</button>
-        <button class="btn btn-view-movie" onclick="window.location.reload()">Return to Home</button>
+        <button class="btn btn-view-movie" id="btn-view-movie" href="{{movie}}">View All Reviews for this Movie</button>
+        <button class="btn btn-home" id="btn-home">Return to Home</button>
     </div>
 </div>

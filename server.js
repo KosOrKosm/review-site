@@ -371,7 +371,7 @@ app.post('/api/review', function(req, res) {
  * 
  * USAGE: PUT /api/review?id=**someID**
  *        pass the contents of an HTML form in the body. 
- *        ie. doRequest('POST', '/api/review?id=**someID**', formData)
+ *        ie. doRequest('PUT', '/api/review?id=**someID**', formData)
  * 
  * PARAMS:
  *      score: the new review score
@@ -391,9 +391,9 @@ app.put('/api/review', function(req, res) {
         const db = conn.db('jnf-review')
         const reviews = db.collection('reviews')
 
-        reviews.findOneAndUpdate({
+        reviews.updateOne({
             owner: sessionRecord.userid,
-            "_id": new mongo.ObjectId(req.query.id)
+            _id: new mongo.ObjectId(req.query.id)
         }, {
             $set: {
                 score: req.body.score,
@@ -401,7 +401,7 @@ app.put('/api/review', function(req, res) {
             }
         })
         .then(record => {
-            if(record.value)
+            if(record && record.modifiedCount > 0)
                 res.status(200).json(record)
             else
                 res.status(400).send('No such review found')
@@ -565,7 +565,11 @@ app.get('/api/movie', function(req, res) {
     const filter = { }
 
     if (req.query.id)
-        filter._id = new mongo.ObjectId(req.query.id)
+        try {
+            filter._id = new mongo.ObjectId(req.query.id)
+        } catch (excp) {
+            filter._id = req.query.id
+        }
 
     if (req.query.name)
         filter.name = req.query.name
