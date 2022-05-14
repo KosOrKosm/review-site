@@ -788,14 +788,20 @@ async function loadTestData() {
     console.log('Creating test movies')
 
     test_movies = [{
-        name: "Test Movie 1",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+        name: "Spider-Man: No Way Home",
+        desc: "Spider-Man's identity has been revealed. he will work with Doctor Strange to fix it"
     },{
-        name: "Test Movie 2",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+        name: "Toy Story",
+        desc: "A world where toys become alive when people are not present"
     },{
-        name: "Test Movie 3",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+        name: "The Dark Knight",
+        desc: "Story origin of Bruce Wayne"
+    },{
+        name: "Star Wars The Last Jedi",
+        desc: "Rey seeks training from Luke Skywalker. Resistance flee from First Order Attack"
+    },{
+        name: "Alien",
+        desc: "An alien gets loose in a ship, killing the crew memebers one by one"
     }]
     
     await movies.insertMany(test_movies)
@@ -804,24 +810,29 @@ async function loadTestData() {
 
     test_reviews = await reviews.insertMany([{
         owner: reviewerAccount,
-        movie: sample(test_movies)._id,
+        movie: test_movies[0]._id,
         score: Math.round(Math.random()*10),
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+        text: "It was a really good movie! Brought back memories!"
     },{
         owner: reviewerAccount,
-        movie: sample(test_movies)._id,
+        movie: test_movies[1]._id,
         score: Math.round(Math.random()*10),
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+        text: "Great movie for adults and kids, it made me tear up"
     },{
         owner: reviewerAccount,
-        movie: sample(test_movies)._id,
+        movie: test_movies[2]._id,
         score: Math.round(Math.random()*10),
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+        text: "One of the best movies i’ve ever seen in cinema!"
     },{
         owner: reviewerAccount,
-        movie: sample(test_movies)._id,
+        movie: test_movies[3]._id,
         score: Math.round(Math.random()*10),
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu elementum est. Vivamus sed ex quis orci viverra pharetra at ac velit. Morbi suscipit accumsan turpis, eget interdum sem finibus nec. Proin pharetra nulla eget efficitur tristique. Suspendisse sapien dolor, egestas vitae porttitor sed, hendrerit vitae nibh. Pellentesque nec ipsum ut ligula aliquet condimentum. Quisque ut fermentum massa. Donec imperdiet, risus vel fermentum venenatis, dui libero finibus ipsum, eget faucibus eros nisl at libero. Nunc sodales scelerisque sem non accumsan. Curabitur a porttitor nisl."
+        text: "I was disappointed about this movie. It doesn’t even feel like star wars."
+    },{
+        owner: reviewerAccount,
+        movie: test_movies[4]._id,
+        score: Math.round(Math.random()*10),
+        text: "I wish they made more movies like this!"
     }])
 
     conn.close()
