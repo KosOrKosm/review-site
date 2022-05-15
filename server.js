@@ -240,7 +240,6 @@ hostFile('content/login.js')
 hostFile('content.js')
 hostFile('style/container.css')
 hostFile('style/login.css')
-hostFile('index-login.js')
 
 // The login screen
 app.get('/login', function(req, res) {
@@ -762,6 +761,15 @@ async function loadTestData() {
 
     const conn = await MongoClient.connect(dbURL)
     const db = conn.db(dbName)
+
+    const moviesExists = await db.listCollections({name: "movies"}).next()
+
+    // Generate test data only if necessary
+    if(moviesExists)
+        return
+
+    console.log('Detecting a fresh install of the server! Mounting testing data')
+        
     const movies = db.collection('movies')
     const reviews = db.collection('reviews')
     const accounts = db.collection('accounts')

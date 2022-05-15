@@ -41,6 +41,8 @@ async function loadFullReview(reviewID) {
     }
 
     // Load full review template and frame
+    const body = document.getElementsByTagName('body')[0]
+    const content = body.getElementsByClassName('content-block')[0]
     const template = Handlebars.compile(await doRequest('GET', 'templates/full-review.handlebars'))
     content.innerHTML = template(review)
 

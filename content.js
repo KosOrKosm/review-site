@@ -26,10 +26,10 @@ function doRequest(method, URL, body) {
     })
 }
 
-const body = document.getElementsByTagName('body')[0]
-const content = body.getElementsByClassName('content-block')[0]
-
 async function loadContent(htmlname, jsnames) {
+
+    const body = document.getElementsByTagName('body')[0]
+    const content = body.getElementsByClassName('content-block')[0]
 
     // Load the HTML
     if (htmlname != undefined) {
