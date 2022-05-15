@@ -802,6 +802,12 @@ async function loadTestData() {
     },{
         name: "Alien",
         desc: "An alien gets loose in a ship, killing the crew memebers one by one"
+    },{
+        name: "Avengers",
+        desc: "Superheroes unite to stop the invasion of earth"
+    },{
+        name: "AJurassic World",
+        desc: "A sequel to the Jurassic Park movies"
     }]
     
     await movies.insertMany(test_movies)
@@ -833,6 +839,16 @@ async function loadTestData() {
         movie: test_movies[4]._id,
         score: Math.round(Math.random()*10),
         text: "I wish they made more movies like this!"
+    },{
+        owner: reviewerAccount,
+        movie: test_movies[5]._id,
+        score: Math.round(Math.random()*10),
+        text: "This is how you make a superhero movie. It was really awesome to watch!"
+    },{
+        owner: reviewerAccount,
+        movie: test_movies[6]._id,
+        score: Math.round(Math.random()*10),
+        text: "Better than the third movie of Jurassic Park. It reminds me of the first one!"
     }])
 
     conn.close()
